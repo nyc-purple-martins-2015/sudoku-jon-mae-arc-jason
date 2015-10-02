@@ -8,58 +8,78 @@ class Sudoku
 
   def game_over
     # so far, this method checks if the entire board is full.
-    @board.each do |column|
-      column.each do |value|
-        if value == "-"
-          p false
-        else
-          p true
-        end
+    row = 0
+    for row in @board
+      if row.include?("-")
+        false
+      else
+        true
       end
     end
+    # @board.each do |column|
+    #   column.each do |value|
+    #     if value == "-"
+    #       false
+    #     else
+    #       true
+    #     end
+    #   end
+    # end
   end
 
   def is_legal?(number, index)
   end
 
-  def row_full?
-    i = 0
-    for i in @board
-      if i.include?("-")
-        false
+
+  def in_row?(num)
+    for row in @board
+      if row.include?(num)
+        return true
       else
-        true
+        return false
       end
     end
   end
 
-  def row_has_num?(index)
-  end
+  # def column_full?
+  #   transposed = @board.transpose
+  #   i = 0
+  #   for i in transposed
+  #     if i.include?("-")
+  #       false
+  #     else
+  #       true
+  #     end
+  #   end
+  # end
 
-  def column_full?
-    transposed = @board.transpose
-    i = 0
-    for i in transposed
-      if i.include?("-")
-        false
+  def in_column?(index)
+    transposed = @board.transposed
+    for column in transposed
+      if column.include?(num)
+        return true
       else
-        true
+        return false
       end
     end
-  end
-
-  def column_has_num?(index)
   end
 
   def square_is_empty?(array)
   end
 
   def solve
+    #iterate through each space in the array
+    # insert 1 into that space.
+    # is_legal?
+    # if true, leave it
+    # elsif false, add 1 to that number, input 2
+    # is_legal?
   end
 
   def board
     board_array = @board_string.split("")
     @board = Array.new(9){board_array.shift(9)}
+    @board
   end
 
   # Returns a string representing the current state of the board
