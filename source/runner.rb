@@ -19,5 +19,5 @@ game = Sudoku.new(board_string)
 game.solve
 game.to_s
 game.column_full?
-
+game.row_full?
 

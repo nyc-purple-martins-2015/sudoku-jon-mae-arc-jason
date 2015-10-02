@@ -1,3 +1,5 @@
+require 'pry'
+
 class Sudoku
   def initialize(board_string)
     @board_string = board_string
@@ -5,23 +7,44 @@ class Sudoku
   end
 
   def game_over
+    # so far, this method checks if the entire board is full.
+    @board.each do |column|
+      column.each do |value|
+        if value == "-"
+          p false
+        else
+          p true
+        end
+      end
+    end
   end
 
   def is_legal?(number, index)
   end
 
-  def row_full?(array)
+  def row_full?
+    i = 0
+    for i in @board
+      if i.include?("-")
+        false
+      else
+        true
+      end
+    end
   end
 
   def row_has_num?(index)
   end
 
   def column_full?
-    transposed_board = @board.transpose
-    if transposed_board[0].any? { |element| element = "-" }
-      false
-    else
-      true
+    transposed = @board.transpose
+    i = 0
+    for i in transposed
+      if i.include?("-")
+        false
+      else
+        true
+      end
     end
   end
 
