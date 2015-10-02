@@ -28,17 +28,13 @@ class Sudoku
   end
 
   def is_legal?(number, index)
+    # call number in a row, call number in a column
+
   end
 
 
-  def in_row?(num)
-    for row in @board
-      if row.include?(num)
-        return true
-      else
-        return false
-      end
-    end
+  def in_row?(row, num)
+    row.include?(num)
   end
 
   # def column_full?
@@ -53,15 +49,10 @@ class Sudoku
   #   end
   # end
 
-  def in_column?(num)
-    transposed = @board.transpose
-    for column in transposed
-      if column.include?(num)
-        true
-      else
-        false
-      end
-    end
+  def in_column?(col_ind, num)
+    # col.include?(num)
+    @board.each{|row| return true if @board[row][col_ind].eql?(num)}
+    false
   end
 
   def square_is_empty?(array)
@@ -79,7 +70,6 @@ class Sudoku
   def board
     board_array = @board_string.split("")
     @board = Array.new(9){board_array.shift(9)}
-    p @board
   end
 
   # Returns a string representing the current state of the board
