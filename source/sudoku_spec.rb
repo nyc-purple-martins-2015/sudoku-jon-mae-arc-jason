@@ -6,8 +6,6 @@ describe 'Sudoku' do
   end
 end
 
-end
-
 # solve a row
 # solve a column
 # solve solve a box
