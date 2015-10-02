@@ -53,13 +53,13 @@ class Sudoku
   #   end
   # end
 
-  def in_column?(index)
-    transposed = @board.transposed
+  def in_column?(num)
+    transposed = @board.transpose
     for column in transposed
       if column.include?(num)
-        return true
+        true
       else
-        return false
+        false
       end
     end
   end
@@ -79,7 +79,7 @@ class Sudoku
   def board
     board_array = @board_string.split("")
     @board = Array.new(9){board_array.shift(9)}
-    @board
+    p @board
   end
 
   # Returns a string representing the current state of the board
