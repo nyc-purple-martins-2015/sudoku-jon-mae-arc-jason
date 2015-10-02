@@ -4,7 +4,6 @@ class Sudoku
     @board_string = board_string
     @board = board
     @boxes = compile_all_boxes
-
   end
 
   def game_over
@@ -16,26 +15,53 @@ class Sudoku
   def row_full?(array)
   end
 
-  def row_has_num?(index)
+  def in_row?(index)
   end
 
-  def column_full?(array)
+  def column_full?(col_index)
+    @board.each{|row| return false if @board[row][col_index]=="-"}
+    true
   end
 
-  def column_has_num?(index)
+  def in_col?(index)
   end
-
-
-  # params:  box is the box we are checking
-
-  # iterate through all squares that are on the box
-  #   return false if any of them are empty
-  # return true
 
   def box_full?(box)
     return false if box.any?{|e| e == empty }
     true
   end
+
+  def in_box?(box, num)
+    @boxes[box].include?(num)
+  end
+
+  #input:  coordinates on the grid
+  #output: 3x3 box (as a string) that includes the square at those coordinates
+
+  def which_box(row, col)
+    if (0..2).include?(row) && (0..2).include?(col)
+      return "box_1"
+    elsif (0..2).include?(row) && (3..5).include?(col)
+      return "box_2"
+    elsif (0..2).include?(row) && (6..8).include?(col)
+      return "box_3"
+    elsif (3..5).include?(row) && (0..2).include?(col)
+      return "box_4"
+    elsif (3..5).include?(row) && (3..5).include?(col)
+      return "box_5"
+    elsif (3..5).include?(row) && (6..8).include?(col)
+      return "box_6"
+    elsif (6..8).include?(row) && (0..2).include?(col)
+      return "box_7"
+    elsif (6..8).include?(row) && (3..5).include?(col)
+      return "box_8"
+    elsif (6..8).include?(row) && (6..8).include?(col)
+      return "box_9"
+    else
+      p "illegal index"
+    end
+  end
+
 
   def square_is_empty?(row_index, col_index)
     return false if board[row_index][col_index] != "-"

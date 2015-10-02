@@ -31,3 +31,5 @@ puts "------------------"
 # p game.compile_all_boxes
 # game.test_box.each{|box| p box}
 p game.boxes
+p game.in_box?("box_1", "5")
+p game.in_box?("box_1", "6")
