@@ -15,21 +15,6 @@ class Sudoku
   def row_full?(array)
   end
 
-  def in_row?(index)
-  end
-
-  def column_full?(col_index)
-    @board.each{|row| return false if @board[row][col_index]=="-"}
-    true
-  end
-
-  def in_col?(index)
-  end
-
-  def box_full?(box)
-    return false if box.any?{|e| e == empty }
-    true
-  end
 
   def in_box?(box, num)
     @boxes[box].include?(num)
@@ -117,7 +102,14 @@ class Sudoku
 
   # Returns a string representing the current state of the board
   def to_s
-    # @board_string.join("\n")
+    #needs work
+    @board.each do |row|
+      row.join(" ")
+    end
+     @board.each do |row|
+      row.join("\n")
+    end
+    @board
   end
 
 end

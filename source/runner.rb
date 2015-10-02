@@ -33,3 +33,4 @@ puts "------------------"
 p game.boxes
 p game.in_box?("box_1", "5")
 p game.in_box?("box_1", "6")
+p game.which_box(0,5)
