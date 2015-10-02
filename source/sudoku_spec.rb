@@ -10,8 +10,7 @@ describe 'Sudoku' do
     expect(board.length).to eql(9)
   end
 
-  it 'expects #column_full? to contain only integers' do
-    expect(board)
+
 end
 
 # solve a row

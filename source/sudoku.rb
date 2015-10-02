@@ -18,7 +18,7 @@ class Sudoku
 
   def column_full?
     transposed_board = @board.transpose
-    if transposed_board.any? { |element| element = "-" }
+    if transposed_board[0].any? { |element| element = "-" }
       false
     else
       true
@@ -35,7 +35,8 @@ class Sudoku
   end
 
   def board
-    @board = Array.new(9){@board_string.split("").shift(9)}
+    board_array = @board_string.split("")
+    @board = Array.new(9){board_array.shift(9)}
   end
 
   # Returns a string representing the current state of the board
