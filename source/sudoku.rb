@@ -1,5 +1,5 @@
 
-class Board
+class Sudoku
   attr_reader :board, :boxes, :starting_numbers
 
   #Initializes Board
