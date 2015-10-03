@@ -180,5 +180,30 @@ class Sudoku
 
 end
 
+class Square
+
+  attr_reader :coordinates
+  attr_accessor :legal_moves, :number
+
+  def initialize(str)
+    @number=""
+    @coordinates=[2, 1]
+    @legal_moves=["2", 7, 9]
+  end
+
+  def find_legal_moves(board)
+
+
+  def fill_square(str)
+    @number=str
+  end
+
+  def add_coordinates(row, col)
+    @coordinates= [row, col]
+  end
+
+end
+
+
 # Going through each square and having it only check the possible values of that square.
 # Class square which had a variable @number_shown, @legal_move
