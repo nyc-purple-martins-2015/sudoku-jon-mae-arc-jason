@@ -17,6 +17,7 @@ board_string = File.readlines('sudoku_puzzles.txt').first.chomp
 
 game = Sudoku.new(board_string)
 
+game.print_board
 
 
 # game.solve
@@ -26,7 +27,8 @@ game = Sudoku.new(board_string)
 # game.board.each{|row| p row}
 
 
-# puts "------------------"
+
+puts "------------------"
 
 
 
