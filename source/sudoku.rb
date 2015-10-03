@@ -20,36 +20,8 @@ class Sudoku
     end
   end
 
-    #iterate through each space in the array
-    # insert 1 into that space.
-    # is_legal?
-    # if true, leave it
-    # elsif false, add 1 to that number, input 2
-    # is_legal?
   def solve(row=0, col=0, num=1)
     return true if game_over?
-    if !square_is_empty?(row, col)
-      row +=1 if col == 8
-      col+=1
-      col%=9
-      solve(row, col, 1)
-    else
-      if is_legal?(num, row, col) && num <= 9
-        @board[row.to_s][col.to_s]=num
-        row +=1 if col == 8
-        col+=1
-        col%=9
-        solve(row, col, num)
-      elsif num > 9
-         row -=1 if col == 0
-          col-=1
-          col%=9
-        solve(row, col, num)
-      else
-        num+=1
-        solve(row, col, num)
-      end
-    end
   end
 
   def game_over?
@@ -127,7 +99,23 @@ class Sudoku
   def board
     board_array = @board_string.split("")
     @board = Array.new(9){board_array.shift(9)}
+    for row in @board
+      for col in row
+        row[col]=Square.new(row[col])
+      end
+    end
   end
+
+  def print_board
+    board.each do |row| 
+      row.each do |col|
+        print "# {col.number} " 
+      end
+      puts ""
+    end
+  end
+
+
 
 # compiles all boxes (1-9) into a hash with 1-d arrays as values
   def compile_all_boxes
@@ -185,13 +173,13 @@ class Square
   attr_reader :coordinates
   attr_accessor :legal_moves, :number
 
-  def initialize(str)
-    @number=""
+  def initialize(number)
+    @number=number
     @coordinates=[2, 1]
     @legal_moves=["2", 7, 9]
   end
 
-  def find_legal_moves(board)
+  # def find_legal_moves(board)
 
 
   def fill_square(str)
@@ -203,7 +191,6 @@ class Square
   end
 
 end
-
 
 # Going through each square and having it only check the possible values of that square.
 # Class square which had a variable @number_shown, @legal_move

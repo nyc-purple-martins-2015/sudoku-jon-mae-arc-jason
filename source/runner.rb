@@ -47,6 +47,7 @@ require_relative 'sudoku'
 board_string = File.readlines('sudoku_puzzles.txt').first.chomp
 
 game = Sudoku.new(board_string)
+game.print_board
 
 
 
@@ -54,7 +55,7 @@ game = Sudoku.new(board_string)
 # puts game
 
 
-game.board.each{|row| p row}
+# game.board.each{|row| p row}
 
 
 puts "------------------"
@@ -64,7 +65,7 @@ puts "------------------"
 # game.solve
 # game.in_column?(0, "1")
 
-p game.is_legal?("1", 0, 0)
+# p game.is_legal?("1", 0, 0)
 
 # 81 spots
 # 9 spots already in place
