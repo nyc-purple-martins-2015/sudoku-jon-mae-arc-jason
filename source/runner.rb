@@ -30,11 +30,13 @@ puts "------------------"
 
 # p game.compile_all_boxes
 # game.test_box.each{|box| p box}
-p game.boxes
-p game.in_box?("box_1", "5")
-p game.in_box?("box_1", "6")
-p game.which_box(0,5)
-
-game.in_column?("8")
-game.in_row?("3")
+# p game.boxes
+# p game.in_box?("box_1", "5")
+# p game.in_box?("box_1", "6")
+# p game.which_box(0,5)
+# p game.starting_numbers
+game.solve
+game.board.each{|row| p row}
+# game.in_column?("8")
+# game.in_row?("3")
 
