@@ -1,5 +1,3 @@
-
-
 class Sudoku
   attr_reader :board, :boxes, :starting_numbers
   def initialize(board_string)
@@ -11,11 +9,11 @@ class Sudoku
   end
 
   def create_starting_numbers
-
     @board.each_index do |row|
       @board.each_index do |col|
         starting_numbers << [row.to_s, col.to_s] if @board[row][col]!="-"
       end
+      #starting numbers gives the position of the intial numbers.
     end
   end
 
@@ -56,14 +54,14 @@ class Sudoku
       if row.include?("-")
         return false
       else
-        true
+        return true
       end
     end
   end
 
   def is_legal?(num, row, col)
     raise RuntimeError.new("you passed in a row of value #{row} and a column of value #{col}") if row>8 || col>8
-    return false if in_row?(board[row], num) || in_col?(col, num) || in_box?(@boxes[which_box(row, col)], num)
+    return false if in_row?(board[row], num) || in_column?(col, num) || in_box?(@boxes[which_box(row, col)], num)
     true
   end
 
@@ -71,6 +69,7 @@ class Sudoku
     row.include?(num)
   end
 
+# this is broken.
   def in_column?(col_ind, num)
     @board.each{|row| return true if @board[row][col_ind].eql?(num)}
     false
@@ -112,10 +111,12 @@ class Sudoku
     end
   end
 
-
   def square_is_empty?(row_index, col_index)
-    return false if board[row_index][col_index] != "-"
-    true
+    if board[row_index][col_index] != "-"
+      false
+    else
+      true
+    end
   end
 
   def board
@@ -155,9 +156,6 @@ class Sudoku
     box
   end
 
-
-
-
   def compile_row(string, length)
     string.split("")
   end
@@ -177,4 +175,5 @@ class Sudoku
 
 end
 
-
+# Going through each square and having it only check the possible values of that square.
+# Class square which had a variable @number_shown, @legal_move
