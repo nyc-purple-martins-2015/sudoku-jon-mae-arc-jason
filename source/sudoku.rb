@@ -64,17 +64,16 @@ class Sudoku
 
   def is_legal?(num, row, col)
     raise RuntimeError.new("you passed in a row of value #{row} and a column of value #{col}") if row>8 || col>8
-    return false if in_row?(board[row], num) || in_column?(col, num) || in_box?(@boxes[which_box(row, col)], num)
+    return false if in_row?(row, num) || in_column?(col, num) || in_box?(@boxes[which_box(row, col)], num)
     true
   end
 
-#this is broken
+
   def in_row?(row, num)
     @board[row].include?(num)
   end
 
 
-# this is broken.
   def in_column?(column, num)
     transposed = @board.transpose
     transposed[column].include?(num)
