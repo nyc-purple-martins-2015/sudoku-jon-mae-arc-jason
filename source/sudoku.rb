@@ -112,10 +112,12 @@ class Sudoku
     end
   end
 
-
   def square_is_empty?(row_index, col_index)
-    return false if board[row_index][col_index] != "-"
-    true
+    if board[row_index][col_index] != "-"
+      false 
+    else 
+      true
+    end
   end
 
   def board
