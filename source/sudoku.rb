@@ -1,6 +1,8 @@
 
-class Sudoku
+class Board
   attr_reader :board, :boxes, :starting_numbers
+
+  #Initializes Board
   def initialize(board_string)
     @board_string = board_string
     @board = board
@@ -9,14 +11,12 @@ class Sudoku
     create_starting_numbers
   end
 
+  #starting numbers gives the position of the intial numbers.
   def create_starting_numbers
     @board.each_index do |row|
       @board.each_index do |col|
         starting_numbers << [row.to_s, col.to_s] if @board[row][col]!="-"
       end
-
-      #starting numbers gives the position of the intial numbers.
-
     end
   end
 
@@ -26,32 +26,35 @@ class Sudoku
     # if true, leave it
     # elsif false, add 1 to that number, input 2
     # is_legal?
-  def solve(row=0, col=0, num=1)
-    return true if game_over?
-    if !square_is_empty?(row, col)
-      row +=1 if col == 8
-      col+=1
-      col%=9
-      solve(row, col, 1)
-    else
-      if is_legal?(num, row, col) && num <= 9
-        @board[row.to_s][col.to_s]=num
-        row +=1 if col == 8
-        col+=1
-        col%=9
-        solve(row, col, num)
-      elsif num > 9
-         row -=1 if col == 0
-          col-=1
-          col%=9
-        solve(row, col, num)
-      else
-        num+=1
-        solve(row, col, num)
-      end
-    end
-  end
 
+#NOT FUNCTIONING
+  # def solve(row=0, col=0, num=1)
+  #   return true if game_over?
+  #   if !square_is_empty?(row, col)
+  #     row +=1 if col == 8
+  #     col+=1
+  #     col%=9
+  #     solve(row, col, 1)
+  #   else
+  #     if is_legal?(num, row, col) && num <= 9
+  #       @board[row.to_s][col.to_s]=num
+  #       row +=1 if col == 8
+  #       col+=1
+  #       col%=9
+  #       solve(row, col, num)
+  #     elsif num > 9
+  #        row -=1 if col == 0
+  #         col-=1
+  #         col%=9
+  #       solve(row, col, num)
+  #     else
+  #       num+=1
+  #       solve(row, col, num)
+  #     end
+  #   end
+  # end
+
+  #game_over? should return false if board contains any "-".
   def game_over?
     for row in @board
       if row.include?("-")
@@ -62,36 +65,42 @@ class Sudoku
     end
   end
 
+  #takes in number row and column as arguments and returns false if number is not a legal move; functions.
   def is_legal?(num, row, col)
     raise RuntimeError.new("you passed in a row of value #{row} and a column of value #{col}") if row>8 || col>8
     return false if in_row?(row, num) || in_column?(col, num) || in_box?(@boxes[which_box(row, col)], num)
     true
   end
 
-
+  #Functions
   def in_row?(row, num)
     @board[row].include?(num)
   end
 
-
+  #Functions
   def in_column?(column, num)
     transposed = @board.transpose
     transposed[column].include?(num)
   end
 
-
+  #took out brackets because original code was returning (doesn't need brackets: "box[\"1\", \"-\", \"5\", \"-\", \"9\", \"-\", \"2\", \"-\", \"-\"]"
+  #Functions
   def in_box?(box, num)
-    @boxes[box].include?(num)
+    box.include?(num)
   end
 
+  #returns true if there is a number at a specific coordinate (row,col).
+  #Functions
   def is_a_starting_number?(row, col)
-    return true if starting numbers.include?([row.to_s, col.to_s])
+    return true if starting_numbers.include?([row.to_s, col.to_s])
     false
   end
 
   #input:  coordinates on the grid
   #output: 3x3 box (as a string) that includes the square at those coordinates
 
+  #Takes row and col as argument and returns which box the coordinate is located in.
+  #functions
   def which_box(row, col)
     if (0..2).include?(row) && (0..2).include?(col)
       return "box_1"
@@ -179,6 +188,10 @@ class Sudoku
   end
 
 end
+
+# class Square
+#   def initialize
+#   end
 
 # Going through each square and having it only check the possible values of that square.
 # Class square which had a variable @number_shown, @legal_move

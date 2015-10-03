@@ -15,7 +15,7 @@ require_relative 'sudoku'
 
 board_string = File.readlines('sudoku_puzzles.txt').first.chomp
 
-game = Sudoku.new(board_string)
+game = Board.new(board_string)
 
 
 
@@ -46,7 +46,7 @@ require_relative 'sudoku'
 
 board_string = File.readlines('sudoku_puzzles.txt').first.chomp
 
-game = Sudoku.new(board_string)
+game = Board.new(board_string)
 
 
 
@@ -54,24 +54,29 @@ game = Sudoku.new(board_string)
 # puts game
 
 
-game.board.each{|row| p row}
+# game.board.each{|row| p row}
 
 
-puts "------------------"
+# puts "------------------"
 
 
 
 # game.solve
 # game.in_column?(0, "1")
 
-p game.is_legal?("1", 0, 0)
 
+# p game.solve
 # 81 spots
 # 9 spots already in place
 # 72 other possibilities
 # Should only be able to take from a pool of 1..9, 8 times
+# p game.create_starting_numbers
 
-
-
-
-
+# p game.in_box?("box_9", "9")
+# p game.game_over?
+# p game.is_legal?("5",8,8)
+# p game.in_row?(0, "4")
+# p game.in_column?(0, "5")
+# p game.compile_all_boxes
+# p game.is_a_starting_number?(1, 0)
+ p game.which_box(8, 8)
