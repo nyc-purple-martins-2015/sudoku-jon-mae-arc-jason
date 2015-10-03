@@ -37,7 +37,15 @@ describe '#which_box' do
 	it 'expects which_box(3, 5) to return box_3' do 
 		expect(game.which_box(3, 5)).to eql("box_5")
 	end 
-end
+end 
+
+describe '#square_is_empty?' do 
+	let(:game) {Sudoku.new("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")}
+	it 'expects square_is_empty?' do 
+		expect(game.square_is_empty?(0, 5)).to eql(false)
+	end
+end 
+
 
 
 

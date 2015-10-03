@@ -38,6 +38,7 @@ puts "------------------"
 # game.solve
 # game.board.each{|row| p row}
 # game.in_column?(0,"8")
-p game.game_over?
+game.game_over?
+p game.square_is_empty?(0, 5)
 # game.in_row?("3")
 

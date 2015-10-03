@@ -1,3 +1,4 @@
+
 class Sudoku
   attr_reader :board, :boxes, :starting_numbers
   def initialize(board_string)
