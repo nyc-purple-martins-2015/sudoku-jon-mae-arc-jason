@@ -96,23 +96,27 @@ class Sudoku
     end
   end
 
+  # creates a new board in which each space is an instance of the Square class and each row is an array of squares.
   def board
     board_array = @board_string.split("")
     @board = Array.new(9){board_array.shift(9)}
-    for row in @board
-      for col in row
-        row[col]=Square.new(row[col])
+    for row in 0...@board.length
+      for col in 0...@board.length
+         @board[row][col] = Square.new(@board[row][col])
       end
     end
+    @board
   end
 
+  # prints out the board with just the number.
   def print_board
-    board.each do |row| 
-      row.each do |col|
-        print "# {col.number} " 
-      end
-      puts ""
-    end
+    print to_s
+    # @board.each do |row|
+    #   row.each do |square|
+    #     print " #{square.number} "
+    #   end
+    #   puts ""
+    # end
   end
 
 
@@ -133,7 +137,6 @@ class Sudoku
     # i+=1
     row+=3
     end
-
     boxes
   end
 
@@ -155,15 +158,14 @@ class Sudoku
 
   # Returns a string representing the current state of the board
   def to_s
-    #needs work
+    string_board = ""
     @board.each do |row|
-      row.join(" ")
+      row.each do |square|
+        string_board << " #{square.number} "
+      end
+      string_board << "\n"
     end
-     @board.each do |row|
-      row.join("\n")
-    end
-    # @board.join("\n")
-    # p @board
+    string_board
   end
 
 end
@@ -175,8 +177,8 @@ class Square
 
   def initialize(number)
     @number=number
-    @coordinates=[2, 1]
-    @legal_moves=["2", 7, 9]
+    # @coordinates=[2, 1]
+    # @legal_moves=["2", 7, 9]
   end
 
   # def find_legal_moves(board)
