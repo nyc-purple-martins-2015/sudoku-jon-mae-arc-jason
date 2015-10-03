@@ -28,6 +28,7 @@ game.board.each{|row| p row}
 
 puts "------------------"
 
+
 require_relative 'sudoku'
 
 # The sudoku puzzles that your program will solve can be found
@@ -67,5 +68,24 @@ game.solve
 # 72 other possibilities
 # Should only be able to take from a pool of 1..9, 8 times
 
+
+
+# p game.compile_all_boxes
+# game.test_box.each{|box| p box}
+# p game.boxes
+# p game.in_box?("box_1", "5")
+# p game.in_box?("box_1", "6")
+# p game.which_box(0,5)
+# p game.starting_numbers
+# game.solve
+# game.board.each{|row| p row}
+# game.in_column?(0,"8")
+game.game_over?
+puts game.square_is_empty?(0, 1)
+puts game.square_is_empty?(0, 2)
+puts game.square_is_empty?(0, 3)
+puts game.square_is_empty?(0, 4)
+puts game.square_is_empty?(0, 5)
+# game.in_row?("3")
 
 

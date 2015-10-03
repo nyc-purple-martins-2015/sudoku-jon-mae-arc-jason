@@ -1,3 +1,4 @@
+
 class Sudoku
   attr_reader :board, :boxes, :starting_numbers
   def initialize(board_string)
@@ -13,7 +14,9 @@ class Sudoku
       @board.each_index do |col|
         starting_numbers << [row.to_s, col.to_s] if @board[row][col]!="-"
       end
+
       #starting numbers gives the position of the intial numbers.
+
     end
   end
 
@@ -69,11 +72,13 @@ class Sudoku
     row.include?(num)
   end
 
+
 # this is broken.
   def in_column?(col_ind, num)
     @board.each{|row| return true if @board[row][col_ind].eql?(num)}
     false
   end
+
 
   def in_box?(box, num)
     @boxes[box].include?(num)
