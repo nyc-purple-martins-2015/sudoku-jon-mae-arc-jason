@@ -102,7 +102,7 @@ class Sudoku
     @board = Array.new(9){board_array.shift(9)}
     for row in 0...@board.length
       for col in 0...@board.length
-         @board[row][col] = Square.new(@board[row][col])
+         @board[row][col] = Square.new(@board[row][col], [row, col])
       end
     end
     @board
@@ -175,9 +175,9 @@ class Square
   attr_reader :coordinates
   attr_accessor :legal_moves, :number
 
-  def initialize(number)
+  def initialize(number, coordinates)
     @number=number
-    # @coordinates=[2, 1]
+    @coordinates=coordinates
     # @legal_moves=["2", 7, 9]
   end
 

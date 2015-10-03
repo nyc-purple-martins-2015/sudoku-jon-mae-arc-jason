@@ -18,7 +18,7 @@ board_string = File.readlines('sudoku_puzzles.txt').first.chomp
 game = Sudoku.new(board_string)
 
 game.print_board
-# game.board
+# p game.board
 
 # game.solve
 # puts game
