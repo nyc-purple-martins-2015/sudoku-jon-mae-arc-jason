@@ -68,15 +68,15 @@ class Sudoku
     true
   end
 
+#this is broken
   def in_row?(row, num)
-    row.include?(num)
+    @board[row].include?(num)
   end
 
 
 # this is broken.
-  def in_column?(col_ind, num)
-    @board.each{|row| return true if @board[row][col_ind].eql?(num)}
-    false
+  def in_column?(column, num)
+    column.include?(num)
   end
 
 
