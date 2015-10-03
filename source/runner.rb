@@ -35,8 +35,9 @@ puts "------------------"
 # p game.in_box?("box_1", "6")
 # p game.which_box(0,5)
 # p game.starting_numbers
-game.solve
-game.board.each{|row| p row}
-# game.in_column?("8")
+# game.solve
+# game.board.each{|row| p row}
+# game.in_column?(0,"8")
+p game.game_over?
 # game.in_row?("3")
 
