@@ -76,7 +76,8 @@ class Sudoku
 
 # this is broken.
   def in_column?(column, num)
-    column.include?(num)
+    transposed = @board.transpose
+    transposed[column].include?(num)
   end
 
 

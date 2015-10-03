@@ -64,6 +64,7 @@ game.game_over?
 # game.solve
 # game.in_column?(0, "1")
 p game.in_row?(0, "5")
+p game.in_column?(0, "5")
 # 81 spots
 # 9 spots already in place
 # 72 other possibilities
