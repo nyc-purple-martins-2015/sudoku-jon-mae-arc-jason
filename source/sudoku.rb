@@ -1,22 +1,20 @@
 
 class Sudoku
-  attr_reader :board, :boxes, :starting_numbers
+  attr_reader :board, :boxes
   def initialize(board_string)
     @board_string = board_string
     @board = board
     @boxes = compile_all_boxes
-    @starting_numbers=[]
     create_starting_numbers
   end
 
   def create_starting_numbers
     @board.each_index do |row|
       @board.each_index do |col|
-        starting_numbers << [row.to_s, col.to_s] if @board[row][col]!="-"
+        if @board[row][col].number != "-"
+          @board[row][col].starting_number = true
+        end
       end
-
-      #starting numbers gives the position of the intial numbers.
-
     end
   end
 
@@ -105,6 +103,7 @@ class Sudoku
          @board[row][col] = Square.new(@board[row][col], [row, col])
       end
     end
+    create_starting_numbers
     @board
   end
 
@@ -173,12 +172,13 @@ end
 class Square
 
   attr_reader :coordinates
-  attr_accessor :legal_moves, :number
+  attr_accessor :legal_moves, :number, :starting_number
 
   def initialize(number, coordinates)
     @number=number
     @coordinates=coordinates
-    # @legal_moves=["2", 7, 9]
+    @starting_number = false
+    # @legal_moves =
   end
 
   # def find_legal_moves(board)
