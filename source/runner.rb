@@ -23,20 +23,29 @@ game = Sudoku.new(board_string)
 # puts game
 
 
-game.board.each{|row| p row}
+# game.board.each{|row| p row}
 
 
-puts "------------------"
+# puts "------------------"
 
+
+
+# game.solve
+# game.in_column?(0, "1")
+
+
+# p game.solve
+# 81 spots
+# 9 spots already in place
+# 72 other possibilities
+# Should only be able to take from a pool of 1..9, 8 times
+# p game.create_starting_numbers
+
+# p game.in_box?("box_9", "9")
+# p game.game_over?
+# p game.is_legal?("5",8,8)
+# p game.in_row?(0, "4")
+# p game.in_column?(0, "5")
 # p game.compile_all_boxes
-# game.test_box.each{|box| p box}
-# p game.boxes
-# p game.in_box?("box_1", "5")
-# p game.in_box?("box_1", "6")
-# p game.which_box(0,5)
-# p game.starting_numbers
-game.solve
-game.board.each{|row| p row}
-# game.in_column?("8")
-# game.in_row?("3")
-
+# p game.is_a_starting_number?(1, 0)
+ # p game.which_box(8, 8)
