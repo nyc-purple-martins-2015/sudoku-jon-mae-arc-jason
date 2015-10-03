@@ -44,13 +44,13 @@ class Sudoku
     end
   end
 
-  def is_legal?(num, row, col)
-    raise RuntimeError.new("you passed in a row of value #{row} and a column of value #{col}") if row>8 || col>8
-    return false if in_row?(row, num) || in_column?(col, num) || in_box?(@boxes[which_box(row, col)], num)
+  def is_legal?(num, square)
+    # raise RuntimeError.new("you passed in a row of value #{row} and a column of value #{col}") if row>8 || col>8
+    return false if in_row?(square.coordinates[0], num) || in_column?(square.coordinates[1], num) || in_box?(@boxes[which_box(square.coordinates[0], square.coordinates[1])], num)
     true
   end
 
-
+  # takes in the index of a row and the number it is checking, and returns a boolean. Checks if a number is in a row already. Passes all tests.
   def in_row?(row, num)
     @board[row].each {|square| return true if square.number == num}
     false
@@ -59,12 +59,14 @@ class Sudoku
 
   def in_column?(column, num)
     transposed = @board.transpose
-    transposed[column].include?(num)
+    transposed[column].each {|square| return true if square.number == num}
+    false
   end
 
 
   def in_box?(box, num)
-    @boxes[box].include?(num)
+    @boxes[box].each {|square| return true if square.number == num}
+    false
   end
 
   def is_a_starting_number?(row, col)

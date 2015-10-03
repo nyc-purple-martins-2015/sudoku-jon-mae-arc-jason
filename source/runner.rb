@@ -18,8 +18,8 @@ board_string = File.readlines('sudoku_puzzles.txt').first.chomp
 game = Sudoku.new(board_string)
 
 game.print_board
-game.create_starting_numbers
-p game.board_full?
+# game.create_starting_numbers
+# p game.board_full?
 # p game.board
 
 # game.solve

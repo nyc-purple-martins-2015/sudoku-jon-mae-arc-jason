@@ -48,7 +48,41 @@ describe '#in_row?' do
 	it 'expects in row?(0, "5") to be true' do
 		expect(game.in_row?(0, "5")).to eql(true)
 	end
+
+	it 'expects in row?(0, "6") to be false' do
+		expect(game.in_row?(0, "6")). to eql(false)
+	end
 end
 
+describe '#in_column?' do
+	let(:game) {Sudoku.new("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")}
+	it 'expects in_column?(0, "2") to be true' do
+		expect(game.in_row?(0, "2")).to eql(true)
+	end
+	it 'expects in_column ?(0, "3") to be false' do
+		expect(game.in_row?(0, "3")). to eql(false)
+	end
+end
+
+describe '#in_box?' do
+	let(:game) {Sudoku.new("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")}
+	it 'expects in_box?(0, "9") to be true' do
+		expect(game.in_box?("box_1", "9")).to eql(true)
+	end
+	it 'expects in_box?(0, "3") to be false' do
+		expect(game.in_box?("box_1", "3")). to eql(false)
+	end
+end
+
+describe '#is_legal?' do
+	let(:game) {Sudoku.new("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")}
+	let(:square) {Square.new("-", [2,1])}
+	it 'expects is_legal?("7", square) to be true' do
+		expect(game.is_legal?("1", square)).to eql(true)
+	end
+	xit 'expects in_box?(0, "3") to be false' do
+		expect(game.in_box?("box_1", "3")). to eql(false)
+	end
+end
 
 
