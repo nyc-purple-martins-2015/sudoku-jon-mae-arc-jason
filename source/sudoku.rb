@@ -22,7 +22,19 @@ class Sudoku
     return true if game_over?
   end
 
+  def board_full?
+    @board.each_index do |row|
+      @board.each_index do |col|
+        if @board[row][col].number = "-"
+          return false
+        end
+      end
+    end
+    true
+  end
+
   def game_over?
+    # if board_full? = true and each square is legal.
     for row in @board
       if row.include?("-")
         return false
@@ -40,7 +52,8 @@ class Sudoku
 
 
   def in_row?(row, num)
-    @board[row].include?(num)
+    @board[row].each {|square| return true if square.number == num}
+    false
   end
 
 

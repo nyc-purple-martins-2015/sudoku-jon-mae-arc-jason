@@ -21,13 +21,6 @@ describe '#game_over?' do
 	end
 end
 
-describe '#create_starting_numbers' do
-	let(:game) {Sudoku.new("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")}
-	it 'expects create_starting_numbers to return an array' do
-		expect(game.create_starting_numbers).to be_a Array
-	end
-end
-
 describe '#which_box' do
 	let(:game) {Sudoku.new("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")}
 	it 'expects which_box(0, 0) to return box_1' do
@@ -50,6 +43,12 @@ describe '#square_is_empty?' do
 	end
 end
 
+describe '#in_row?' do
+	let(:game) {Sudoku.new("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")}
+	it 'expects in row?(0, "5") to be true' do
+		expect(game.in_row?(0, "5")).to eql(true)
+	end
+end
 
 
 
