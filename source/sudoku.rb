@@ -1,3 +1,5 @@
+
+
 class Sudoku
   attr_reader :board, :boxes
   def initialize(board_string)
@@ -7,14 +9,30 @@ class Sudoku
   end
 
   def game_over
+    # so far, this method checks if the entire board is full.
+    row = 0
+    for row in @board
+      if row.include?("-")
+        false
+      else
+        true
+      end
+    end
+    # @board.each do |column|
+    #   column.each do |value|
+    #     if value == "-"
+    #       false
+    #     else
+    #       true
+    #     end
+    #   end
+    # end
   end
 
   def is_legal?(number, index)
-  end
+    # call number in a row, call number in a column
 
-  def row_full?(array)
   end
-
 
   def in_box?(box, num)
     @boxes[box].include?(num)
@@ -45,6 +63,27 @@ class Sudoku
     else
       p "illegal index"
     end
+
+  def in_row?(row, num)
+    row.include?(num)
+  end
+
+  # def column_full?
+  #   transposed = @board.transpose
+  #   i = 0
+  #   for i in transposed
+  #     if i.include?("-")
+  #       false
+  #     else
+  #       true
+  #     end
+  #   end
+  # end
+
+  def in_column?(col_ind, num)
+    # col.include?(num)
+    @board.each{|row| return true if @board[row][col_ind].eql?(num)}
+    false
   end
 
 
@@ -54,6 +93,12 @@ class Sudoku
   end
 
   def solve
+    #iterate through each space in the array
+    # insert 1 into that space.
+    # is_legal?
+    # if true, leave it
+    # elsif false, add 1 to that number, input 2
+    # is_legal?
   end
 
   def board
@@ -109,7 +154,8 @@ class Sudoku
      @board.each do |row|
       row.join("\n")
     end
-    @board
+    # @board.join("\n")
+    # p @board
   end
 
 end
