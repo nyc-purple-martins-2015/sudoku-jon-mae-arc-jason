@@ -28,6 +28,18 @@ describe '#create_starting_numbers' do
 	end 
 end 
 
+describe '#which_box' do 
+	let(:game) {Sudoku.new("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")}
+	it 'expects which_box(0, 0) to return box_1' do 
+		expect(game.which_box(0, 0)).to eql("box_1")
+	end 
+
+	it 'expects which_box(3, 5) to return box_3' do 
+		expect(game.which_box(3, 5)).to eql("box_5")
+	end 
+end
+
+
 
 
 
