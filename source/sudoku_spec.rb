@@ -6,6 +6,7 @@ describe 'Sudoku' do
   end
 end
 
+describe ''
 end
 
 # solve a row
