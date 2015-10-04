@@ -21,6 +21,7 @@ p game.board
 
 game.solve
 
+
  
 
 
@@ -28,4 +29,5 @@ game.solve
 puts "------------------"
 
 game.board
+
 

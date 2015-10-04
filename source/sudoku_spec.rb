@@ -43,6 +43,7 @@ describe '#square_is_empty?' do
 	end
 end
 
+
 describe '#in_row?' do
 	let(:game) {Sudoku.new("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")}
 	it 'expects in row?(0, "5") to be true' do
@@ -101,6 +102,7 @@ describe '#compile_legal_moves' do
 		game.compile_legal_moves(square)
 		expect(square.legal_moves.sort).to eql(["3","6"])
 	end
+
 
 	it 'expects square_2.legal_moves to contain 4' do
 		game.compile_legal_moves(square_2)
