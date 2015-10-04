@@ -68,6 +68,14 @@ class Sudoku
 
   #game_over? should return false if board contains any "-".
 
+  # input:  a Square object, output a sorted array of legal moves.  
+  # This method sets the legal_moves attribute for a given square to an array of legal moves.  It returns that array for convenience and debugging even though it is destructive.
+  # passes both tests.  might be good to write more tests
+  def compile_legal_moves(square)
+    ("1".."9").each{|num| square.legal_moves << num if is_legal?(num, square) && !square.legal_moves.include?(num)}
+    square.legal_moves
+  end
+
   def game_over?
     # if board_full? = true and each square is legal.
     board_full?
@@ -230,21 +238,11 @@ class Square
     @number=number
     @row_index=row_index
     @col_index=col_index
-    # @coordinates=coordinates
     @starting_number = false
-    # @legal_moves =
+    @legal_moves = []
   end
 
   # def find_legal_moves(board)
-
-
-  def fill_square(str)
-    @number=str
-  end
-
-  def add_coordinates(row, col)
-    @coordinates= [row, col]
-  end
 
 end
 
