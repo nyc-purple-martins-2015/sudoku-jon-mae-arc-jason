@@ -1,93 +1,150 @@
-
 class Sudoku
-  attr_reader :board, :boxes, :starting_numbers
+  attr_reader :board, :boxes, :starting_number
+
+  #Initializes Board
   def initialize(board_string)
     @board_string = board_string
-    @board = board
+    @board = generate_board
     @boxes = compile_all_boxes
-    @starting_numbers=[]
     create_starting_numbers
   end
 
+  #starting numbers gives the position of the initial numbers.
   def create_starting_numbers
     @board.each_index do |row|
       @board.each_index do |col|
-        starting_numbers << [row.to_s, col.to_s] if @board[row][col]!="-"
+        if @board[row][col].number != "-"
+          @board[row][col].starting_number = true
+        end
       end
-      #starting numbers gives the position of the intial numbers. 
     end
   end
 
-    #iterate through each space in the array
-    # insert 1 into that space.
-    # is_legal?
-    # if true, leave it
-    # elsif false, add 1 to that number, input 2
-    # is_legal?
-  def solve(row=0, col=0, num=1)
+
+  def solve(row = 0, col = 0, num = 1)
+    set_legal_moves_for_all_squares
+    for row in board 
+      for square in row
+        
+      end 
+    end  
+   
+      
+
+
+    # iterate through board 
+      #iterate through each row 
+        #reset moveset for each square 
+
+    #iterate through board 
+      #iterate through square 
+        #if square has 1 possible move, set number 
     return true if game_over?
-    if !square_is_empty?(row, col)
-      row +=1 if col == 8
-      col+=1
-      col%=9
-      solve(row, col, 1)
-    else
-      if is_legal?(num, row, col) && num <= 9
-        @board[row.to_s][col.to_s]=num
-        row +=1 if col == 8
-        col+=1
-        col%=9
-        solve(row, col, num)
-      elsif num > 9
-         row -=1 if col == 0
-          col-=1
-          col%=9
-        solve(row, col, num)
-      else
-        num+=1
-        solve(row, col, num)
-      end
-    end
   end
 
-  def game_over?
-    for row in @board
-      if row.include?("-")
-        return false
-      else
-        return true
+  def board_full?
+    @board.each_index do |row|
+      @board[row].each_index do |col|
+        if @board[row][col].number == "-"
+          @board[row][col].number
+          return false
+        end
       end
     end
-  end
-
-  def is_legal?(num, row, col)
-    raise RuntimeError.new("you passed in a row of value #{row} and a column of value #{col}") if row>8 || col>8
-    return false if in_row?(board[row], num) || in_column?(col, num) || in_box?(@boxes[which_box(row, col)], num)
     true
   end
 
-  def in_row?(row, num)
-    row.include?(num)
-  end
 
-# this is broken. 
-  # def in_column?(col_ind, num)
-  #   @board.each{|row| return true if @board[row][col_ind].eql?(num)}
-  #   false
+#NOT FUNCTIONING
+  # def solve(row=0, col=0, num=1)
+  #   return true if game_over?
+  #   if !square_is_empty?(row, col)
+  #     row +=1 if col == 8
+  #     col+=1
+  #     col%=9
+  #     solve(row, col, 1)
+  #   else
+  #     if is_legal?(num, row, col) && num <= 9
+  #       @board[row.to_s][col.to_s]=num
+  #       row +=1 if col == 8
+  #       col+=1
+  #       col%=9
+  #       solve(row, col, num)
+  #     elsif num > 9
+  #        row -=1 if col == 0
+  #         col-=1
+  #         col%=9
+  #       solve(row, col, num)
+  #     else
+  #       num+=1
+  #       solve(row, col, num)
+  #     end
+  #   end
   # end
 
-  def in_box?(box, num)
-    @boxes[box].include?(num)
+  #game_over? should return false if board contains any "-".
+
+  def set_legal_moves_for_all_squares
+    board.each_index do |row|
+      board[row].each_index do|col| 
+        compile_legal_moves(board[row][col]) unless board[row][col].number != "-"
+      end
+    end
   end
 
+  # input:  a Square object, output a sorted array of legal moves.  
+  # This method sets the legal_moves attribute for a given square to an array of legal moves.  It returns that array for convenience and debugging even though it is destructive.
+  # passes both tests.  might be good to write more tests
+  def compile_legal_moves(square)
+    ("1".."9").each{|num| square.legal_moves << num if is_legal?(num, square) && !square.legal_moves.include?(num)}
+    square.legal_moves
+  end
+
+  def game_over?
+    # if board_full? = true and each square is legal.
+    board_full?
+  end
+
+
+  def is_legal?(num, square)
+    # raise RuntimeError.new("you passed in a row of value #{row} and a column of value #{col}") if row>8 || col>8
+    return false if in_row?(square.row_index, num) || in_column?(square.col_index, num) || in_box?(which_box(square.row_index, square.col_index), num)
+    true
+  end
+
+  # takes in the index of a row and the number it is checking, and returns a boolean. Checks if a number is in a row already. Passes all tests.
+
+  def in_row?(row, num)
+    @board[row].each {|square| return true if square.number == num}
+    false
+  end
+
+  #Functions
+  def in_column?(column, num)
+    transposed = @board.transpose
+    transposed[column].each {|square| return true if square.number == num}
+    false
+  end
+
+  #took out brackets because original code was returning (doesn't need brackets: "box[\"1\", \"-\", \"5\", \"-\", \"9\", \"-\", \"2\", \"-\", \"-\"]"
+  #Functions
+  def in_box?(box_key, num)
+    @boxes[box_key].each {|square| return true if square.number == num}
+    false
+  end
+
+  #returns true if there is a number at a specific coordinate (row,col).
+  #Functions
   def is_a_starting_number?(row, col)
-    return true if starting numbers.include?([row.to_s, col.to_s])
+    return true if starting_number.include?([row.to_s, col.to_s])
     false
   end
 
   #input:  coordinates on the grid
   #output: 3x3 box (as a string) that includes the square at those coordinates
 
+  #Takes row and col indices as argument and returns which box the coordinate is located in.
+  #functions
   def which_box(row, col)
     if (0..2).include?(row) && (0..2).include?(col)
       return "box_1"
@@ -113,42 +170,56 @@ class Sudoku
   end
 
   def square_is_empty?(row_index, col_index)
-    if board[row_index][col_index] != "-"
-      false 
-    else 
+    if board[row_index][col_index].number != "-"
+      return false
+    else
       true
     end
   end
 
-  def board
+  # creates a new board in which each space is an instance of the Square class and each row is an array of squares.
+  def generate_board
     board_array = @board_string.split("")
     @board = Array.new(9){board_array.shift(9)}
+    for row in 0...@board.length
+      for col in 0...@board.length
+         @board[row][col] = Square.new(@board[row][col], row, col)
+      end
+    end
+    create_starting_numbers
+    @board
   end
+
+  # prints out the board with just the number.
+  def print_board
+    print to_s
+  end
+
+
 
 # compiles all boxes (1-9) into a hash with 1-d arrays as values
   def compile_all_boxes
-    boxes={}
-    row=0
-    col=0
-    i=1
-    while row<8
-      while col<8
+    boxes = {}
+    row = 0
+    col = 0
+    i = 1
+    while row < 8
+      while col < 8
         boxes["box_#{i}"] = compile_box(row, col)
-        i+=1
-        col+=3
+        i += 1
+        col += 3
       end
-    col=0
+    col = 0
     # i+=1
-    row+=3
+    row += 3
     end
-
     boxes
   end
 
-  # compile a single box
+  # compile a single box into an array of Squares
 
   def compile_box(start_row, start_col)
-    box=[]
+    box = []
     for row in start_row..(start_row+2)
       for col in start_col..(start_col+2)
         box << @board[row][col]
@@ -157,26 +228,40 @@ class Sudoku
     box
   end
 
-
-
-
   def compile_row(string, length)
     string.split("")
   end
 
   # Returns a string representing the current state of the board
   def to_s
-    #needs work
+    string_board = ""
     @board.each do |row|
-      row.join(" ")
+      row.each do |square|
+        string_board << " #{square.number} "
+      end
+      string_board << "\n"
     end
-     @board.each do |row|
-      row.join("\n")
-    end
-    # @board.join("\n")
-    # p @board
+    string_board
   end
 
 end
 
 
+class Square
+
+  attr_reader :coordinates, :row_index, :col_index
+  attr_accessor :legal_moves, :number, :starting_number
+
+  def initialize(number, row_index, col_index)
+    @number = number
+    @row_index = row_index
+    @col_index = col_index
+    @starting_number = false
+    @legal_moves = []
+  end
+
+end
+
+
+# Going through each square and having it only check the possible values of that square.
+# Class square which had a variable @number_shown, @legal_move

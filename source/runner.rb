@@ -16,33 +16,13 @@ require_relative 'sudoku'
 board_string = File.readlines('sudoku_puzzles.txt').first.chomp
 
 game = Sudoku.new(board_string)
+game.print_board
+p game.solve
+ 
 
-
-
-# game.solve
-# puts game
-
-
-game.board.each{|row| p row}
 
 
 puts "------------------"
 
-# p game.compile_all_boxes
-# game.test_box.each{|box| p box}
-# p game.boxes
-# p game.in_box?("box_1", "5")
-# p game.in_box?("box_1", "6")
-# p game.which_box(0,5)
-# p game.starting_numbers
-# game.solve
-# game.board.each{|row| p row}
-# game.in_column?(0,"8")
-game.game_over?
-puts game.square_is_empty?(0, 1)
-puts game.square_is_empty?(0, 2)
-puts game.square_is_empty?(0, 3)
-puts game.square_is_empty?(0, 4)
-puts game.square_is_empty?(0, 5)
-# game.in_row?("3")
+game.board
 
