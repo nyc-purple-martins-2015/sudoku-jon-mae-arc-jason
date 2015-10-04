@@ -76,13 +76,37 @@ end
 
 describe '#is_legal?' do
 	let(:game) {Sudoku.new("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")}
-	let(:square) {Square.new("-", [2,1])}
-	it 'expects is_legal?("7", square) to be true' do
-		expect(game.is_legal?("1", square)).to eql(true)
+	let(:square) {Square.new("-", 2, 2)}
+	let(:square_2) {Square.new("-", 4, 8)}
+	it 'expects is_legal?("3", square) to be true' do
+		expect(game.is_legal?("3", square)).to eql(true)
 	end
-	xit 'expects in_box?(0, "3") to be false' do
-		expect(game.in_box?("box_1", "3")). to eql(false)
+	it 'expects is_legal?("6", square) to be false' do
+		expect(game.is_legal?("4", square)). to eql(false)
 	end
+	it 'expects is_legal?("7", square) to be false' do
+		expect(game.is_legal?("7", square)). to eql(false)
+	end
+	it 'expects is_legal?("3", square_2) to be false' do
+		expect(game.is_legal?("3", square_2)). to eql(false)
+	end
+end
+
+describe '#compile_legal_moves' do
+	let (:game) {Sudoku.new("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")}
+	let(:square) {Square.new("-", 2, 2)}
+	let(:square_2) {Square.new("-", 4, 8)}
+
+	it 'expects square.legal_moves to contain 3, 6' do
+		game.compile_legal_moves(square)
+		expect(square.legal_moves.sort).to eql(["3","6"])
+	end
+
+	it 'expects square_2.legal_moves to contain 3, 6' do
+		game.compile_legal_moves(square_2)
+		expect(square_2.legal_moves.sort).to eql(["4"])
+	end
+
 end
 
 
