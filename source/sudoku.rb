@@ -184,7 +184,6 @@ class Sudoku
   end
 
   def square_is_empty?(row_index, col_index)
-<<<<<<< HEAD
     if board[row_index][col_index].number != "-"
       return false
     else
@@ -193,7 +192,7 @@ class Sudoku
   end
 
   # creates a new board in which each space is an instance of the Square class and each row is an array of squares.
-<<<<<<< HEAD
+
   def generate_board
     board_array = @board_string.split("")
     @board = Array.new(9){board_array.shift(9)}
