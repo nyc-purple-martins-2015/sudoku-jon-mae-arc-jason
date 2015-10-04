@@ -26,6 +26,18 @@ class Sudoku
     return true if game_over?
   end
 
+  def board_full?
+    @board.each_index do |row|
+      @board.each_index do |col|
+        if @board[row][col].number = "-"
+          return false
+        end
+      end
+    end
+    true
+  end
+
+
 #NOT FUNCTIONING
   # def solve(row=0, col=0, num=1)
   #   return true if game_over?
@@ -54,7 +66,9 @@ class Sudoku
   # end
 
   #game_over? should return false if board contains any "-".
+
   def game_over?
+    # if board_full? = true and each square is legal.
     for row in @board
       if row.include?("-")
         return false
@@ -64,28 +78,33 @@ class Sudoku
     end
   end
 
-  #takes in number row and column as arguments and returns false if number is not a legal move; functions.
-  def is_legal?(num, row, col)
-    raise RuntimeError.new("you passed in a row of value #{row} and a column of value #{col}") if row>8 || col>8
-    return false if in_row?(row, num) || in_column?(col, num) || in_box?(@boxes[which_box(row, col)], num)
+
+  def is_legal?(num, square)
+    # raise RuntimeError.new("you passed in a row of value #{row} and a column of value #{col}") if row>8 || col>8
+    return false if in_row?(square.coordinates[0], num) || in_column?(square.coordinates[1], num) || in_box?(@boxes[which_box(square.coordinates[0], square.coordinates[1])], num)
     true
   end
 
-  #Functions
+  # takes in the index of a row and the number it is checking, and returns a boolean. Checks if a number is in a row already. Passes all tests.
+
   def in_row?(row, num)
-    @board[row].include?(num)
+    @board[row].each {|square| return true if square.number == num}
+    false
   end
 
   #Functions
   def in_column?(column, num)
     transposed = @board.transpose
-    transposed[column].include?(num)
+    transposed[column].each {|square| return true if square.number == num}
+    false
   end
 
   #took out brackets because original code was returning (doesn't need brackets: "box[\"1\", \"-\", \"5\", \"-\", \"9\", \"-\", \"2\", \"-\", \"-\"]"
   #Functions
   def in_box?(box, num)
-    box.include?(num)
+    @boxes[box].each {|square| return true if square.number == num}
+    false
+
   end
 
   #returns true if there is a number at a specific coordinate (row,col).
