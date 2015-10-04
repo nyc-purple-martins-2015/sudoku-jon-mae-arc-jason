@@ -5,7 +5,7 @@ class Sudoku
   #Initializes Board
   def initialize(board_string)
     @board_string = board_string
-    @board = board
+    @board = generate_board
     @boxes = compile_all_boxes
     create_starting_numbers
   end
@@ -76,7 +76,7 @@ class Sudoku
 
   def is_legal?(num, square)
     # raise RuntimeError.new("you passed in a row of value #{row} and a column of value #{col}") if row>8 || col>8
-    return false if in_row?(square.row_index, num) || in_column?(square.col_index, num) || in_box?(@boxes[which_box(square.row_index, square.col_index)], num)
+    return false if in_row?(square.row_index, num) || in_column?(square.col_index, num) || in_box?(which_box(square.row_index, square.col_index), num)
     true
   end
 
@@ -96,8 +96,8 @@ class Sudoku
 
   #took out brackets because original code was returning (doesn't need brackets: "box[\"1\", \"-\", \"5\", \"-\", \"9\", \"-\", \"2\", \"-\", \"-\"]"
   #Functions
-  def in_box?(box, num)
-    @boxes[box].each {|square| return true if square.number == num}
+  def in_box?(box_key, num)
+    @boxes[box_key].each {|square| return true if square.number == num}
     false
 
   end
@@ -147,7 +147,7 @@ class Sudoku
   end
 
   # creates a new board in which each space is an instance of the Square class and each row is an array of squares.
-  def board
+  def generate_board
     board_array = @board_string.split("")
     @board = Array.new(9){board_array.shift(9)}
     for row in 0...@board.length

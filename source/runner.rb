@@ -17,8 +17,10 @@ board_string = File.readlines('sudoku_puzzles.txt').first.chomp
 
 game = Sudoku.new(board_string)
 game.print_board
+p "3 is a legal move at row 2, index 1: #{game.is_legal?("3", game.board[2][2])}"
 
 puts "------------------"
 
 # game.boxes.each{|box_name, box_content| print "#box name: {box_name}\nbox value: #{box_content}\n-------\n"}
-p game.which_box(8,7)
+# p game.which_box(8,7)
+# game.is_legal?("3", )
