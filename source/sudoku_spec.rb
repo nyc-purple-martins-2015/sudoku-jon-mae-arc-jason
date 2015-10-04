@@ -76,11 +76,11 @@ end
 
 describe '#is_legal?' do
 	let(:game) {Sudoku.new("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")}
-	let(:square) {Square.new("-", [2,1])}
-	it 'expects is_legal?("7", square) to be true' do
-		expect(game.is_legal?("1", square)).to eql(true)
+	let(:square) {Square.new("-", 2, 1)}
+	it 'expects is_legal?("3", square) to be true' do
+		expect(game.is_legal?("3", square)).to eql(true)
 	end
-	xit 'expects in_box?(0, "3") to be false' do
+	xit 'expects is_legal?("6", square) to be false' do
 		expect(game.in_box?("box_1", "3")). to eql(false)
 	end
 end

@@ -28,8 +28,9 @@ class Sudoku
 
   def board_full?
     @board.each_index do |row|
-      @board.each_index do |col|
-        if @board[row][col].number = "-"
+      @board[row].each_index do |col|
+        if @board[row][col].number == "-"
+          @board[row][col].number
           return false
         end
       end
@@ -69,19 +70,13 @@ class Sudoku
 
   def game_over?
     # if board_full? = true and each square is legal.
-    for row in @board
-      if row.include?("-")
-        return false
-      else
-        return true
-      end
-    end
+    board_full?
   end
 
 
   def is_legal?(num, square)
     # raise RuntimeError.new("you passed in a row of value #{row} and a column of value #{col}") if row>8 || col>8
-    return false if in_row?(square.coordinates[0], num) || in_column?(square.coordinates[1], num) || in_box?(@boxes[which_box(square.coordinates[0], square.coordinates[1])], num)
+    return false if in_row?(square.row_index, num) || in_column?(square.col_index, num) || in_box?(@boxes[which_box(square.row_index, square.col_index)], num)
     true
   end
 
@@ -117,7 +112,7 @@ class Sudoku
   #input:  coordinates on the grid
   #output: 3x3 box (as a string) that includes the square at those coordinates
 
-  #Takes row and col as argument and returns which box the coordinate is located in.
+  #Takes row and col indeces as argument and returns which box the coordinate is located in.
   #functions
   def which_box(row, col)
     if (0..2).include?(row) && (0..2).include?(col)
@@ -144,8 +139,8 @@ class Sudoku
   end
 
   def square_is_empty?(row_index, col_index)
-    if board[row_index][col_index] != "-"
-      false
+    if board[row_index][col_index].number != "-"
+      return false
     else
       true
     end
@@ -157,7 +152,7 @@ class Sudoku
     @board = Array.new(9){board_array.shift(9)}
     for row in 0...@board.length
       for col in 0...@board.length
-         @board[row][col] = Square.new(@board[row][col], [row, col])
+         @board[row][col] = Square.new(@board[row][col], row, col)
       end
     end
     create_starting_numbers
@@ -196,7 +191,7 @@ class Sudoku
     boxes
   end
 
-  # compile a single box
+  # compile a single box into an array of Squares
 
   def compile_box(start_row, start_col)
     box=[]
@@ -228,12 +223,14 @@ end
 
 class Square
 
-  attr_reader :coordinates
+  attr_reader :coordinates, :row_index, :col_index
   attr_accessor :legal_moves, :number, :starting_number
 
-  def initialize(number, coordinates)
+  def initialize(number, row_index, col_index)
     @number=number
-    @coordinates=coordinates
+    @row_index=row_index
+    @col_index=col_index
+    # @coordinates=coordinates
     @starting_number = false
     # @legal_moves =
   end
