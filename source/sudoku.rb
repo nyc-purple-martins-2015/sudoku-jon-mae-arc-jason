@@ -21,27 +21,23 @@ class Sudoku
   end
 
 
-  def solve(row = 0, col = 0, num = 1)
-    set_legal_moves_for_all_squares
-    for row in board 
-      for square in row
-        
+  def solve(row_index = 0, col_index = 0)
+    # if there are any squares with only one possible move 
+      # set number to that move 
+      # set legal_moves to an empty array 
+      # call solve recursively
+    return if game_over? == true
+    @board.each_index do |row_index| 
+      @board.each_index do |col_index| 
+        if @board[row_index][col_index].legal_moves.length == 1
+         @board[row_index][col_index].number = @board[row_index][col_index].legal_moves[0]   
+        end
       end 
-    end  
-   
-      
-
-
-    # iterate through board 
-      #iterate through each row 
-        #reset moveset for each square 
-
-    #iterate through board 
-      #iterate through square 
-        #if square has 1 possible move, set number 
-    return true if game_over?
+    end 
   end
 
+   
+      
   def board_full?
     @board.each_index do |row|
       @board[row].each_index do |col|
@@ -249,7 +245,7 @@ end
 
 class Square
 
-  attr_reader :coordinates, :row_index, :col_index
+  attr_reader :row_index, :col_index
   attr_accessor :legal_moves, :number, :starting_number
 
   def initialize(number, row_index, col_index)
