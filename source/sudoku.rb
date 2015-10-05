@@ -38,33 +38,31 @@ class Sudoku
     true
   end
 
+ def solve(row_index = 0, col_index = 0)
+    return if game_over? == true
 
-#NOT FUNCTIONING
-  # def solve(row=0, col=0, num=1)
-  #   return true if game_over?
-  #   if !square_is_empty?(row, col)
-  #     row +=1 if col == 8
-  #     col+=1
-  #     col%=9
-  #     solve(row, col, 1)
-  #   else
-  #     if is_legal?(num, row, col) && num <= 9
-  #       @board[row.to_s][col.to_s]=num
-  #       row +=1 if col == 8
-  #       col+=1
-  #       col%=9
-  #       solve(row, col, num)
-  #     elsif num > 9
-  #        row -=1 if col == 0
-  #         col-=1
-  #         col%=9
-  #       solve(row, col, num)
-  #     else
-  #       num+=1
-  #       solve(row, col, num)
-  #     end
-  #   end
-  # end
+    reset_legal_moves
+    set_legal_moves_for_all_squares
+
+    @board.each_index do |row_index| 
+      @board.each_index do |col_index| 
+        if @board[row_index][col_index].legal_moves.length == 1
+         @board[row_index][col_index].number = @board[row_index][col_index].legal_moves[0]  
+        end
+      end 
+    end 
+    solve
+  end  
+
+  def reset_legal_moves
+    @board.each_index do |row_index| 
+      @board.each_index do |col_index| 
+        if board[row_index][col_index].number == "-"
+          board[row_index][col_index].legal_moves = [] 
+        end
+      end
+    end    
+  end
 
   #game_over? should return false if board contains any "-".
 
@@ -250,13 +248,4 @@ class Square
     @legal_moves = []
   end
 
-  # def find_legal_moves(board)
-
 end
-
-# class Square
-#   def initialize
-#   end
-
-# Going through each square and having it only check the possible values of that square.
-# Class square which had a variable @number_shown, @legal_move
