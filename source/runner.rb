@@ -13,11 +13,27 @@ require_relative 'sudoku'
 # so we call String#chomp to remove them.
 
 
-board_string = File.readlines('sudoku_puzzles.txt').first.chomp
+# board_string = File.readlines('sudoku_puzzles.txt').first.chomp
+# p board_string[2]
 
-game = Sudoku.new(board_string)
+lines = {}
+board_string = File.readlines('sudoku_puzzles.txt')
+
+i=1
+lines={}
+
+board_string.each do |board| 
+	lines["line_#{i}"]=board
+	i+=1
+end
+
+
+game = Sudoku.new(lines["line_6"])
+game.print_board
+puts ""
+puts "-----------------------"
+puts ""
+game.solve
 game.print_board
 
-puts "------------------"
-game.set_legal_moves_for_all_squares
-p game.board
+
