@@ -33,26 +33,27 @@ class Sudoku
     true
   end
 
-  def solve(row_index = 0, col_index = 0)
+  def solve
     return if game_over? == true
 
     reset_legal_moves
     set_legal_moves_for_all_squares
 
     min = smallest_moveset
+    first_square = find_first_square(min)
 
     if min == 1
       fill_gimmes 
       solve
-    else 
-      first_square = find_first_square(min)
-
+    elsif first_square == nil
+      return
+    else
       i=0
       while i < min
         first_square.number = first_square.legal_moves[i]
-        i+=1
         solve
-        first_square.legal_moves[i] = "-"
+        first_square.number = "-"
+        i+=1
       end
     end
   end
@@ -80,11 +81,11 @@ class Sudoku
 
   #inputs
   def smallest_moveset
-    smallest_moveset_length = 9
+    smallest_moveset_length = 10
     board.each_index do |row|
       board.each_index do |col|
         cur=board[row][col].legal_moves.length
-        if cur < smallest_moveset_length && cur !=0
+        if cur < smallest_moveset_length && cur !=0 
           smallest_moveset_length = cur
         end
       end
@@ -95,7 +96,7 @@ class Sudoku
   def reset_legal_moves
     @board.each_index do |row_index| 
       @board.each_index do |col_index| 
-        if board[row_index][col_index].number == "-"
+        if board[row_index][col_index].number != "-"
           board[row_index][col_index].legal_moves = [] 
         end
       end
