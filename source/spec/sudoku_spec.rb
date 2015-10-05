@@ -124,7 +124,7 @@ describe '#smalleset_moveset' do
 
 	it 'returns the smallest moveset possesed by an unfilled square (as an integer)' do
 		game.set_legal_moves_for_all_squares
-		expect(game.smallest_moveset).to eql(1)
+		expect(game.smalleset_moveset).to eql(1)
 	end
 end
 
