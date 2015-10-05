@@ -28,13 +28,20 @@ board_string.each do |board|
 end
 
 
-game = Sudoku.new(lines["line_5"])
+game = Sudoku.new(lines["line_6"])
 game.print_board
+game.solve
+game.solve
+
+
 puts ""
 puts "-----------------------"
 puts ""
-game.solve
+
 game.print_board
-# p game.smallest_moveset
+# game.set_legal_moves_for_all_squares
+
+
+
 
 

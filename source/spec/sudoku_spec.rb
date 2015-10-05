@@ -1,4 +1,4 @@
-require_relative 'sudoku'
+require_relative '../sudoku'
 
 describe 'Sudoku' do
   it 'expects Sudoku to be a class' do
@@ -122,9 +122,18 @@ describe '#smalleset_moveset' do
 	let (:game) {Sudoku.new("1-58-2----9--764-52--4--819-19--73-6762-83-9-----61-5---76---3-43--2-5-16--3-89--")}
 	let(:square) {Square.new("-", 0, 1)}
 
+	it 'returns the smallest moveset possesed by an unfilled square (as an integer) equal to 1' do
+		game.set_legal_moves_for_all_squares
+		expect(game.smallest_moveset).to eql 1
+	end
+
+
 	it 'returns the smallest moveset possesed by an unfilled square (as an integer)' do
 		game.set_legal_moves_for_all_squares
-		expect(game.smallest_moveset).to eql(1)
+		game.fill_gimmes
+		game.reset_legal_moves
+		game.set_legal_moves_for_all_squares
+		expect(game.smallest_moveset).to eql 2
 	end
 end
 
