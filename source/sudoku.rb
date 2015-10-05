@@ -21,11 +21,6 @@ class Sudoku
     end
   end
 
-
-  def solve(row=0, col=0, num=1)
-    return true if game_over?
-  end
-
   def board_full?
     @board.each_index do |row|
       @board[row].each_index do |col|
@@ -38,21 +33,64 @@ class Sudoku
     true
   end
 
- def solve(row_index = 0, col_index = 0)
+  def solve(row_index = 0, col_index = 0)
     return if game_over? == true
 
     reset_legal_moves
     set_legal_moves_for_all_squares
 
+    min = smallest_moveset
+
+    if min == 1
+      fill_gimmes 
+      solve
+    else 
+      first_square = find_first_square(min)
+
+      i=0
+      while i < min
+        first_square.number = first_square.legal_moves[i]
+        i+=1
+        solve
+        first_square.legal_moves[i] = "-"
+      end
+    end
+  end
+
+
+  def find_first_square(number)
+    board.each_index do |row| 
+      board.each_index do |col| 
+        return board[row][col] if board[row][col].legal_moves.length == number
+      end 
+    end 
+    puts "Square does not exist"    
+  end 
+
+
+  def fill_gimmes
     @board.each_index do |row_index| 
       @board.each_index do |col_index| 
         if @board[row_index][col_index].legal_moves.length == 1
-         @board[row_index][col_index].number = @board[row_index][col_index].legal_moves[0]  
+          @board[row_index][col_index].number = @board[row_index][col_index].legal_moves[0]  
         end
       end 
     end 
-    solve
-  end  
+  end
+
+  #inputs
+  def smallest_moveset
+    smallest_moveset_length = 9
+    board.each_index do |row|
+      board.each_index do |col|
+        cur=board[row][col].legal_moves.length
+        if cur < smallest_moveset_length && cur !=0
+          smallest_moveset_length = cur
+        end
+      end
+    end
+    smallest_moveset_length
+  end
 
   def reset_legal_moves
     @board.each_index do |row_index| 
@@ -166,7 +204,7 @@ class Sudoku
     @board = Array.new(9){board_array.shift(9)}
     for row in 0...@board.length
       for col in 0...@board.length
-         @board[row][col] = Square.new(@board[row][col], row, col)
+        @board[row][col] = Square.new(@board[row][col], row, col)
       end
     end
     create_starting_numbers
@@ -184,9 +222,7 @@ class Sudoku
     # end
   end
 
-
-
-# compiles all boxes (1-9) into a hash with 1-d arrays as values
+  # compiles all boxes (1-9) into a hash with 1-d arrays as values
   def compile_all_boxes
     boxes={}
     row=0
@@ -198,9 +234,9 @@ class Sudoku
         i+=1
         col+=3
       end
-    col=0
-    # i+=1
-    row+=3
+      col=0
+      # i+=1
+      row+=3
     end
     boxes
   end
@@ -246,6 +282,7 @@ class Square
     @col_index=col_index
     @starting_number = false
     @legal_moves = []
+    @last_number_placed
   end
 
 end
